@@ -7,7 +7,7 @@
  * By blackd000
  */
 
-package Numbers1.FindPi1;
+package numbers1.findPi1;
 
 import java.util.Scanner;
 import java.math.BigDecimal;
