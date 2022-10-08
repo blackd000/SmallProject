@@ -1,0 +1,3 @@
+How to write a simple server application, we need two most important, what is it?///1) ServerSocketChannel 2) SocketChannel
+What do ServerSocketChannel does///wait for a client requests
+What do SocketChannel does///Communicate with the client
