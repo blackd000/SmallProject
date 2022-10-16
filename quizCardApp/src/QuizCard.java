@@ -1,4 +1,4 @@
-package OOP.c16_fileIO.NIOApproach;
+package quizCardApp.src;
 
 public class QuizCard {
   private String question;

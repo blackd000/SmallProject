@@ -1,4 +1,4 @@
-package OOP.c17_connection.gameSnake;
+package gameSnake.src;
 
 import javax.swing.*;
 import java.awt.*;
