@@ -1,4 +1,4 @@
-package quizCardApp.src;
+package business;
 
 public class QuizCard {
   private String question;

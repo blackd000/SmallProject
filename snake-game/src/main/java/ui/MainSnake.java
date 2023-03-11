@@ -1,4 +1,4 @@
-package gameSnake.src;
+package ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class MainSnake {
   public void buildGUI() {
     frame = new JFrame("Snake Game");
 
-    String pathTitleIcon = "./gameSnake/somePics/snake.jpg";
+    String pathTitleIcon = "src/main/resources/pics/snake.png";
     frame.setIconImage(new ImageIcon(pathTitleIcon).getImage());
 
     Font font = new Font(Font.SERIF, Font.BOLD, 25);
@@ -46,11 +46,10 @@ public class MainSnake {
 
     scoreLabel = new JLabel();
     scoreLabel.setFont(font);
+    subPanel.add(scoreLabel);
 
     JLabel messageLabel = new JLabel("Press F3 to Restart");
     messageLabel.setFont(font);
-
-    subPanel.add(scoreLabel);
     subPanel.add(messageLabel);
 
     background.add(BorderLayout.CENTER, mainPanel);
@@ -184,7 +183,7 @@ public class MainSnake {
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        String pathGameOverIcon = "./gameSnake/somePics/crying-boy.gif";
+        String pathGameOverIcon = "src/main/resources/pics/crying-boy.gif";
         Image image = new ImageIcon(pathGameOverIcon).getImage();
         g.drawImage(image,
             (MAINPANEL_WIDTH - image.getWidth(frame)) / 2,
@@ -207,13 +206,9 @@ public class MainSnake {
   }
 
   private class MultiKeyPressListener implements KeyListener {
-    // Set of currently pressed keys
-    // private final Set<Integer> pressedKeys = new HashSet<>();
 
     @Override
     public void keyPressed(KeyEvent e) {
-      // pressedKeys.add(e.getKeyCode());
-
       switch (e.getKeyCode()) {
         case KeyEvent.VK_W:
         case KeyEvent.VK_UP:
