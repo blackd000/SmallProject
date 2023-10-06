@@ -1,0 +1,51 @@
+@model ToDoListViewModel
+@{
+    ViewData["Title"] = "Adding a task";
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h2>Add New Task</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="mb-3">
+        <label asp-for="CurrentTask.Title" class="form-label">Title</label>
+        <input asp-for="CurrentTask.Title" class="form-control" />
+        <span asp-validation-for="CurrentTask.Title"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CurrentTask.CategoryId" class="form-label">Category</label>
+        <select asp-for="CurrentTask.CategoryId" class="form-select"
+            asp-items="@(new SelectList(Model.Categories, "CategoryId", "Name"))">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="CurrentTask.CategoryId"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CurrentTask.DueDate" class="form-label">Due Date</label>
+        <input asp-for="CurrentTask.DueDate" class="form-control" />
+        <span asp-validation-for="CurrentTask.DueDate"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CurrentTask.DueEnd" class="form-label">Due End</label>
+        <input asp-for="CurrentTask.DueEnd" class="form-control" />
+        <span asp-validation-for="CurrentTask.DueEnd"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CurrentTask.StatusId">Status</label>
+        <select asp-for="CurrentTask.StatusId" class="form-select"
+            asp-items="@(new SelectList(Model.Statuses, "StatusId", "Name"))">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="CurrentTask.StatusId"></span>
+    </div>
+
+    @* I alway fogot this :v *@
+    <input type="hidden" asp-for="CurrentTask.ToDoId" />
+
+    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

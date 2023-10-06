@@ -1,0 +1,21 @@
+html {
+  font-size: 14px;
+}
+
+body {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.input-validation-error {
+  border: 2px solid #dc3545;
+  background-color: #faebd7;
+}
+
+/* .validation-summary-valid {
+  display: none;
+}
+
+.validation-summary-errors ul {
+  list-style: none;
+} */

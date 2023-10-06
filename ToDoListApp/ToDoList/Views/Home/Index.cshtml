@@ -1,0 +1,110 @@
+﻿@model ToDoListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-2">
+        <form asp-action="Filter" method="post">
+            <div class="mb-3">
+                <label>Category</label>
+                <select name="filter" class="form-select"
+                    asp-items="@(new SelectList(Model.Categories, "CategoryId", "Name",
+                        @Model.Filters.CategoryId))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Due Date</label>
+                <select name="filter" class="form-select"
+                    asp-items="@(new SelectList(Model.DueFilters, "Key", "Value",
+                        @Model.Filters.Due))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Status</label>
+                <select name="filter" class="form-select"
+                    asp-items="@(new SelectList(Model.Statuses, "StatusId", "Name",
+                        @Model.Filters.StatusId))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filter</button>
+
+            <a asp-action="Index" asp-route-id="" class="btn btn-outline-secondary">Clear</a>
+        </form>
+    </div>
+    <div class="col-md-10">
+        <form asp-controller="ToDoList" asp-action="MarkComplete" 
+            asp-route-id="@Model.Filters.FilterString" method="post">
+            <table class="table table-bordered table-striped mt-2">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th class="w-15"></th>
+                        <th class="w-15"></th>
+                        <th class="w-15"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (ToDo task in Model.ToDos)
+                {
+                    @* if the task is overdue it will display a warning, and only if it open *@
+                    string overdue = task.OverDue ? "bg-warning" : "";
+                    <tr>
+                        <td>@task.Title</td>
+                        <td>@task.Category.Name</td>
+                        <td class="@overdue">
+                            @task.DueDate?.ToString("dd/MM/yyyy HH:mm") -
+                            @task.DueEnd?.ToString("dd/MM/yyyy HH:mm")
+                        </td>
+                        <td class="@overdue">@task.Status.Name</td>
+                        <td>
+                        @if (task.StatusId == "open")
+                        {
+                            <button type="submit" class="btn btn-primary"
+                                name="@nameof(ToDo.ToDoId)" value="@task.ToDoId">
+                                Mark Complete
+                            </button>
+                        }
+                        else
+                        {
+                            <a asp-controller="ToDoList" asp-action="MarkUncomplete" 
+                                asp-route-toDoId="@task.ToDoId" class="btn btn-secondary">
+                                Mark Uncomplete
+                            </a>
+                        }
+                        </td>
+                        <td>
+                            <a asp-controller="ToDoList" asp-action="Edit" asp-route-id="@task.ToDoId"
+                                class="btn btn-primary">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-controller="ToDoList" asp-action="Delete" asp-route-toDoId="@task.ToDoId"
+                                class="btn btn-outline-primary">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </form>
+        <form asp-controller="ToDoList" asp-action="DeleteCompleteTasks"
+            asp-route-id="@Model.Filters.FilterString">
+
+            <button type="submit" class="btn btn-primary">Delete All Complete Tasks</button>
+
+            <a asp-controller="ToDoList" asp-action="Add" class="btn btn-primary">
+                Add A Task
+            </a>
+        </form>
+    </div>
+</div>
